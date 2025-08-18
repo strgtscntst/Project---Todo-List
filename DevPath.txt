@@ -1,0 +1,19 @@
+Herein lies notes on how to structure the app, both informal and formal.
+
+Goals:
+    - Create a list of Project objects
+    - Each Project object contains multiple ToDo objects
+    - Button generates new Projects
+    - Button generates new ToDo
+    -  toggles visiblity on ToDos markedButton "Complete"
+    - Button? toggles a compact view mode, for better overview
+    ToDos contain:
+    - title
+    - description
+    - checkbox to mark complete
+    - indication of priority
+    - dueDate
+    - notes
+
+CONSIDER:
+    - using date-fns from npm
