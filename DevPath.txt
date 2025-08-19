@@ -12,6 +12,7 @@ Goals:
     - description
     - checkbox to mark complete
     - indication of priority
+        - for testing purposes, scale of 1-5m, with 5 being highest
     - dueDate
     - notes
 

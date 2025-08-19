@@ -5,6 +5,8 @@ const content = document.getElementById("content")
 
 function populateContent(projects){
     projects.forEach(project => {
+        console.log(`PROJECT NAME: ${project.projectName}`)
+
         project.toDos.forEach(toDo => populateToDo(toDo))
     });
 }
@@ -17,8 +19,9 @@ function populateToDo(toDo){
     console.log(`Priority: ${toDo.priority}`);
     console.log(`Notes: ${toDo.notes}`)
 }
+
 class Project {
-    constructor(projectName){
+    constructor(projectName = "none"){
         this.projectName = projectName;
         this.complete = false;
         this.toDos = [];
@@ -29,31 +32,9 @@ class Project {
 }
 
 
-// function Project(projectName){
- 
-//     this.projectName = projectName,
-//     this.complete = false,
-//     this.toDos = []
-//     this.createToDo = (title, description, dueDate, priority, notes)=>{
-//         this.toDos.push(new ToDo(title, description, dueDate, priority, notes))
-//     }
-
-//     this.createToDo = function(title, description, dueDate, priority, notes){
-//         this.toDos.push({
-//             title: title,
-//             description: description,
-//             dueDate: dueDate,
-//             complete: false,
-//             priority: priority,
-//             notes: notes
-//         })
-//     }
-
-
-// }
 
 class ToDo{
-    constructor(title, description, dueDate, priority, notes){
+    constructor(title = "none", description = "none", dueDate = "none", priority = "none", notes = "none"){
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
@@ -63,14 +44,7 @@ class ToDo{
     }
 }
 
-// function ToDo(title, description, dueDate, priority, notes){
-//     this.title = title,
-//     this.description = description,
-//     this.dueDate = dueDate,
-//     this.complete = false,
-//     this.priority = priority,
-//     this.notes = notes
-// }
+
 
 // test content
 
@@ -91,7 +65,11 @@ testProject.createToDo(
 )
 
 //test scripts
-
-console.log(`Project Name: ${testProject.projectName}`)
 projects.push(testProject)
+
+let nextProject = new Project()
+nextProject.createToDo()
+nextProject.createToDo()
+projects.push(nextProject)
+
 populateContent(projects)
