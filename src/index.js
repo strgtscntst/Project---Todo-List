@@ -17,7 +17,10 @@ function createProjectCardList(projects){
 
 function populateContent(projects){
     let cardList = createProjectCardList(projects)
-    cardList.forEach(projectCard => CONTENT.appendChild(projectCard))
+    cardList.forEach(projectCard => {
+        projectCard.setAttribute("class", "projectCard")
+        CONTENT.appendChild(projectCard)
+    })
 
 }
 
