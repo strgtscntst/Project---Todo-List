@@ -1,23 +1,61 @@
-console.log("Connection")
+console.log("Connection Established")
+
+//TODO: figure out a way to collapse both Project and ToDo cards
 
 const projects = []
-const content = document.getElementById("content")
+const CONTENT = document.getElementById("content")
 
 function populateContent(projects){
     projects.forEach(project => {
-        console.log(`PROJECT NAME: ${project.projectName}`)
-
-        project.toDos.forEach(toDo => populateToDo(toDo))
+        let projectCard = generateProjectCard(project)
+        CONTENT.appendChild(projectCard)
     });
 }
 
-function populateToDo(toDo){
-    console.log(`Title: ${toDo.title}`);
-    console.log(`Description: ${toDo.description}`);
-    console.log(`Complete: ${toDo.complete? "Yes" : "No"}`);
-    console.log(`Due Date: ${toDo.dueDate}`);
-    console.log(`Priority: ${toDo.priority}`);
-    console.log(`Notes: ${toDo.notes}`)
+function generateProjectCard(project){
+    //initiate project card
+    let projectCard = document.createElement("div");
+    //generate title element
+    let title = document.createElement("h2")
+    title.textContent= `Project Name: ${project.projectName}`
+
+    projectCard.appendChild(title)
+    console.log(`PROJECT NAME: ${project.projectName}`)
+
+    project.toDos.forEach(toDo =>{
+        let toDoCard = generateToDoCard(toDo)
+        projectCard.appendChild(toDoCard);
+    })
+
+    return projectCard
+}
+
+function generateToDoCard(toDo){
+    //TODO: make this actually generate a div with the relevant elements
+    let toDoCard = document.createElement("div")
+    toDoCard.setAttribute("class", "toDoCard")
+
+    console.log(toDo)
+
+    Object.entries(toDo).forEach(
+        entry => appendKeyValueToCard(toDoCard, entry)
+    )
+
+    return toDoCard
+    //TODO: add buttons that EDIT and DELETE the ToDo card.
+}
+
+function appendKeyValueToCard(targetCard, [key, value]){
+    console.log(key)
+    let newDiv
+    if (key === "title"){
+        newDiv = document.createElement("h3")
+    } else {
+        newDiv = document.createElement("div")
+    };
+    newDiv.setAttribute("class", key);
+    newDiv.textContent = `${value}`;
+    targetCard.appendChild(newDiv)
 }
 
 class Project {
@@ -27,7 +65,13 @@ class Project {
         this.toDos = [];
     }
     createToDo(title, description, dueDate, priority, notes){
-        this.toDos.push(new ToDo(title, description, dueDate, priority, notes))
+        this.toDos.push(new ToDo(
+            title, 
+            description, 
+            dueDate, 
+            priority, 
+            notes
+        ))
     }
 }
 
@@ -46,7 +90,11 @@ class ToDo{
 
 
 
-// test content
+// TEST CONTENT
+
+let nextProject = new Project()
+nextProject.createToDo()
+nextProject.createToDo()
 
 const testProject = new Project("Test Project")
 testProject.createToDo(
@@ -64,12 +112,9 @@ testProject.createToDo(
     "This is another test ToDo." 
 )
 
-//test scripts
+//TEST SCRIPTS
 projects.push(testProject)
 
-let nextProject = new Project()
-nextProject.createToDo()
-nextProject.createToDo()
 projects.push(nextProject)
 
 populateContent(projects)
