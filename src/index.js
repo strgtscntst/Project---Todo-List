@@ -1,3 +1,4 @@
+import './styles.css'
 console.log("Connection Established")
 
 //TODO: figure out a way to collapse both Project and ToDo cards
@@ -5,37 +6,40 @@ console.log("Connection Established")
 const projects = []
 const CONTENT = document.getElementById("content")
 
-function populateContent(projects){
+function createProjectCardList(projects){
+    let projectCardArray = []
     projects.forEach(project => {
-        let projectCard = generateProjectCard(project)
-        CONTENT.appendChild(projectCard)
+        let projectCard = createProjectCard(project)
+        projectCardArray.push(projectCard)
     });
+    return projectCardArray
 }
 
-function generateProjectCard(project){
-    //initiate project card
+function populateContent(projects){
+    let cardList = createProjectCardList(projects)
+    cardList.forEach(projectCard => CONTENT.appendChild(projectCard))
+
+}
+
+function createProjectCard(project){
+    //TODO: provide indicator for project.complete boolean
     let projectCard = document.createElement("div");
-    //generate title element
     let title = document.createElement("h2")
     title.textContent= `Project Name: ${project.projectName}`
 
     projectCard.appendChild(title)
-    console.log(`PROJECT NAME: ${project.projectName}`)
 
     project.toDos.forEach(toDo =>{
-        let toDoCard = generateToDoCard(toDo)
+        let toDoCard = createToDoCard(toDo)
         projectCard.appendChild(toDoCard);
     })
 
     return projectCard
 }
 
-function generateToDoCard(toDo){
-    //TODO: make this actually generate a div with the relevant elements
+function createToDoCard(toDo){
     let toDoCard = document.createElement("div")
     toDoCard.setAttribute("class", "toDoCard")
-
-    console.log(toDo)
 
     Object.entries(toDo).forEach(
         entry => appendKeyValueToCard(toDoCard, entry)
@@ -46,8 +50,9 @@ function generateToDoCard(toDo){
 }
 
 function appendKeyValueToCard(targetCard, [key, value]){
-    console.log(key)
     let newDiv
+    //TODO: ensure appropriate display for Dates
+    //TODO: ensure appropriate display for "complete" boolean
     if (key === "title"){
         newDiv = document.createElement("h3")
     } else {
