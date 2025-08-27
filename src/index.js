@@ -98,7 +98,8 @@ class ToDo{
 
 (function inputWindowController(){
 
-    //declare buttons
+    //cache DOM elements
+
     const newProjectButton = document.getElementById("newProjectButton");
     const content = CONTENT;
     const modalAddBtn = document.getElementById('addBtn')
@@ -117,22 +118,68 @@ class ToDo{
             }
         })
     modalCancelBtn
+        // clear contents of #modalContent
         .addEventListener('click', ()=> {
             dialog.close()
         })
     modalAddBtn
         .addEventListener('click', ()=>{
+
             //submitContent(target, newContent)
+
             console.log("Added Content")
+            // clear contents of #modalContent
             dialog.close()
         })
 
     var inputModals = (function(){
-
+        //TODO: extract this module into its own thing. Indentation too deep.
+        //      Going to have to remember to return the operations used.
 
         function newToDo(target){
             console.log("new todo button pressed")
             //populate Modal
+            let header = document.createElement(`h1`)
+            header.textContent = "New ToDo"
+
+            modalContent.appendChild(header)
+
+            //title
+            addElementToParent('input', modalContent, {
+                type: 'text',
+                id: 'title',
+                placeholder: 'Title',
+            })
+
+            //description
+            addElementToParent('textarea', modalContent, {
+                id: 'description',
+                rows: 5,
+                placeholder: 'Description',
+            })
+
+            //dueDate
+            addElementToParent('input', modalContent, {
+                type: 'date',
+                id: 'dueDate',
+            })
+
+            //priority
+            addElementToParent('input', modalContent, {
+                type: 'range',
+                id: 'priority',
+                value: 3,
+                min: 1,
+                max: 5,
+                list: 'markers',
+
+            })
+            //notes
+            addElementToParent('textArea', modalContent, {
+                id: 'notes',
+                placeHolder: 'additional notes here...',
+                rows: 2,
+            })
 
             dialog.showModal()
         }
@@ -140,7 +187,27 @@ class ToDo{
             console.log("new project button pressed")
 
             //populate Modal
+            let header = document.createElement(`h1`)
+            header.textContent = "New Project"
+
+            modalContent.appendChild(header)
+
+            addElementToParent('input', modalContent, {
+                type: 'text', 
+                id: 'projectNameField', 
+                placeholder: 'Project Name'
+            })
+
             dialog.showModal()
+        }
+
+        function addElementToParent(element, parent, options = {}){
+            let newElement = document.createElement(element)
+            for(let attribute in options){
+                newElement.setAttribute(attribute, options[attribute])
+            }
+
+            parent.appendChild(newElement)
         }
 
         return{
