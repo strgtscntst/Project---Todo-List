@@ -62,7 +62,7 @@ function appendKeyValueToCard(targetCard, [key, value]){
         newDiv = document.createElement("div")
     };
     newDiv.setAttribute("class", key);
-    newDiv.textContent = `${value}`;
+    newDiv.textContent = `${key}: ${value}`;
     targetCard.appendChild(newDiv)
 }
 
@@ -95,6 +95,63 @@ class ToDo{
         this.notes = notes;
     }
 }
+
+(function inputWindowController(){
+
+    //declare buttons
+    const newProjectButton = document.getElementById("newProjectButton");
+    const content = CONTENT;
+    const modalAddBtn = document.getElementById('addBtn')
+    const modalCancelBtn = document.getElementById('cancelBtn')
+    const dialog = document.getElementById('userInputDialog')
+    const modalContent = document.getElementById('modalContent')
+    
+    //add event listeners
+    
+    newProjectButton    // only one button per page, so good
+        .addEventListener('click', ()=> inputModals.newProject())
+    content             // one listener for indeterminate # of buttons
+        .addEventListener('click', (event)=> {
+            if(event.target.classList.contains('newToDoButton')){
+                inputModals.newToDo(event.target)
+            }
+        })
+    modalCancelBtn
+        .addEventListener('click', ()=> {
+            dialog.close()
+        })
+    modalAddBtn
+        .addEventListener('click', ()=>{
+            //submitContent(target, newContent)
+            console.log("Added Content")
+            dialog.close()
+        })
+
+    var inputModals = (function(){
+
+
+        function newToDo(target){
+            console.log("new todo button pressed")
+            //populate Modal
+
+            dialog.showModal()
+        }
+        function newProject(){
+            console.log("new project button pressed")
+
+            //populate Modal
+            dialog.showModal()
+        }
+
+        return{
+            newToDo: newToDo,
+            newProject: newProject
+        }
+    })()
+    
+
+    
+})()
 
 
 
